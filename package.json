@@ -24,6 +24,7 @@
     "format:write": "prettier --write src/"
   },
   "dependencies": {
+    "@mtproto/core": "6.0.1",
     "dotenv": "^10.0.0"
   }
 }
