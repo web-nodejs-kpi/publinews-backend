@@ -1,0 +1,18 @@
+{
+    "extends": [
+        "prettier",
+        "eslint:recommended"
+    ],
+    "plugins": [
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-unused-vars": "warn",
+        "camelcase": "warn"
+    },
+    "env": {
+        "node": true
+    }
+
+}
