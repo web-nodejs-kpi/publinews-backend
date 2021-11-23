@@ -22,5 +22,8 @@
     "lint:fix": "eslint --fix src/",
     "format:check": "prettier --check src/",
     "format:write": "prettier --write src/"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0"
   }
 }

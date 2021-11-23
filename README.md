@@ -3,6 +3,7 @@
 ```
 npm i             # dependencies
 npm run prepare   # husky hooks
+# fill out .env file with api keys
 ```
 
 Backend for PubliNews project will have to assure:
