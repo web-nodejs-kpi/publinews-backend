@@ -1,4 +1,8 @@
 {
+  "name": "publinews-backend",
+  "description": "backend for web node js project",
+  "main": "./src/index.js",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^8.3.0",
     "eslint-config-node": "^4.1.0",
@@ -13,6 +17,10 @@
     "*.js": "eslint --cache --fix"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix src/",
+    "format:check": "prettier --check src/",
+    "format:write": "prettier --write src/"
   }
 }
