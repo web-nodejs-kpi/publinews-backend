@@ -14,7 +14,7 @@
     "prettier": "^2.4.1"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.js": "eslint --cache"
   },
   "scripts": {
     "prepare": "husky install",
