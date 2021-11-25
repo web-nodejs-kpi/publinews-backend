@@ -26,6 +26,6 @@
   "dependencies": {
     "@mtproto/core": "6.0.1",
     "dotenv": "^10.0.0",
-    "recent-tweets": "0.9.0"
+    "twitter-api-v2": "^1.7.0"
   }
 }
