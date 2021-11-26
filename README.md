@@ -1,9 +1,11 @@
 # Setup for developers:
 
+Fill .env file with data and  
+Execute setup script:
+
 ```
-npm i             # dependencies
-npm run prepare   # husky hooks
-# fill out .env file with api keys
+chmod +x setup.sh
+./setup.sh
 ```
 
 Backend for PubliNews project will have to assure:
