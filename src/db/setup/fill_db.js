@@ -9,21 +9,24 @@ const knex = require('knex').knex({
 })
 
 // TODO: check knex to work it seems not to work
-console.log(pg_config)
+
 // action
-knex.schema.withSchema('public').createTable('source', table => {
-    table.increments('source_id')
-    table.string('social_network')
-    table.string('content', 512)
-})
-console.log('source')
-knex.schema.withSchema('public').createTable('news', table => {
-    table.increments('news_id')
-    table.string('social_network')
-    table.string('link', 512)
-    table.string('author')
-    table.string('headline')
-    table.string('content', 2048)
-    table.string('rubric')
-})
-console.log('news')
+const createTables = async () => {
+    await knex.schema.withSchema('public').createTable('source', table => {
+        table.increments('source_id')
+        table.string('social_network')
+        table.string('content', 512)
+    })
+
+    await knex.schema.withSchema('public').createTable('news', table => {
+        table.increments('news_id')
+        table.string('social_network')
+        table.string('link', 512)
+        table.string('author')
+        table.string('headline')
+        table.string('content', 2048)
+        table.string('rubric')
+    })
+}
+
+createTables().then(() => knex.destroy())
