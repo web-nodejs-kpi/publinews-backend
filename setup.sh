@@ -1,5 +1,6 @@
 if [ ! -f .env ]; then
     echo "Seems you have not filled .env file"
+    cp .env.example .env
     exit 1
 fi
 
