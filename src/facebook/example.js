@@ -26,3 +26,9 @@ function GetFbPosts(pageUrl) {
         return posts
     })
 }
+
+GetFbPosts('https://www.facebook.com/tsn.ua/posts').then(posts => {
+    for (const post of posts) {
+        console.log(post.createdAt, post.message)
+    }
+})
