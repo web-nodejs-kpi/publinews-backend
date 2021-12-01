@@ -8,8 +8,7 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        "no-unused-vars": "warn",
-        "camelcase": "warn"
+        "no-unused-vars": "warn"
     },
     "env": {
         "node": true,
