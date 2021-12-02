@@ -28,7 +28,7 @@ const create_source = () => {
 }
 
 const create_notes = () => {
-    return knex.schema.withSchema('public').createTable('notes', table => {
+    return knex.schema.withSchema('public').createTable('note', table => {
         table.increments('note_id')
         table.string('link', 512)
         table.string('headline')
@@ -48,7 +48,7 @@ const add_foreign_key_source = () => {
 }
 
 const add_foreign_key_notes = () => {
-    return knex.schema.table('notes', table => {
+    return knex.schema.table('note', table => {
         table.integer('source_id').unsigned()
         table.foreign('source_id').references('source_id').inTable('source')
     })
