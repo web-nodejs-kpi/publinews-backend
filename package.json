@@ -18,8 +18,8 @@
     "*.js": "eslint --cache"
   },
   "scripts": {
-    "start": "node ./src/api",
-    "start:dev": "nodemon ./src/api",
+    "start": "node ./src/",
+    "start:dev": "nodemon ./src/",
     "prepare": "husky install",
     "lint": "eslint src/",
     "lint:fix": "eslint --fix src/",
