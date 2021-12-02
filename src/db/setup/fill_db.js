@@ -8,8 +8,6 @@ const knex = require('knex').knex({
     },
 })
 
-// TODO: check knex to work it seems not to work
-
 // action
 const create_social_network = () => {
     return knex.schema
@@ -66,40 +64,3 @@ const create_tables = async () => {
 }
 
 create_tables().then(() => console.log('Created tables'))
-
-// const createTables = async () => {
-//     knex.schema
-//         .withSchema('public')
-//         .createTable('social_network', table => {
-//             table.increments('social_network_id')
-//             table.string('name')
-//         })
-//         .then(
-//             knex.schema
-//                 .withSchema('public')
-//                 .createTable('source', table => {
-//                     table.increments('source_id')
-//                     table
-//                         .foreign('social_network_id')
-//                         .references('social_network.social_network_id')
-//                     table.string('name')
-//                     table.string('link', 512)
-//                     table.string('rubric')
-//                 })
-//                 .then(
-//                     knex.schema
-//                         .withSchema('public')
-//                         .createTable('notes', table => {
-//                             table.increments('note_id')
-//                             table
-//                                 .foreign('source_id')
-//                                 .references('source.source_id')
-//                             table.string('link', 512)
-//                             table.string('headline')
-//                             table.string('content', 2048)
-//                             table.timestamp('created_at')
-//                         })
-//                         .then(() => console.log('created notes table'))
-//                 )
-//         )
-// }
