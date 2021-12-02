@@ -11,22 +11,95 @@ const knex = require('knex').knex({
 // TODO: check knex to work it seems not to work
 
 // action
-const createTables = async () => {
-    await knex.schema.withSchema('public').createTable('source', table => {
-        table.increments('source_id')
-        table.string('social_network')
-        table.string('content', 512)
-    })
+const create_social_network = () => {
+    return knex.schema
+        .withSchema('public')
+        .createTable('social_network', table => {
+            table.increments('social_network_id')
+            table.string('name')
+        })
+}
 
-    await knex.schema.withSchema('public').createTable('news', table => {
-        table.increments('news_id')
-        table.string('social_network')
+const create_source = () => {
+    return knex.schema.withSchema('public').createTable('source', table => {
+        table.increments('source_id')
+        table.string('name')
         table.string('link', 512)
-        table.string('author')
-        table.string('headline')
-        table.string('content', 2048)
         table.string('rubric')
     })
 }
 
-createTables().then(() => knex.destroy())
+const create_notes = () => {
+    return knex.schema.withSchema('public').createTable('notes', table => {
+        table.increments('note_id')
+        table.string('link', 512)
+        table.string('headline')
+        table.string('content', 2048)
+        table.timestamp('created_at')
+    })
+}
+
+const add_foreign_key_source = () => {
+    return knex.schema.table('source', table => {
+        table.integer('social_network_id').unsigned()
+        table
+            .foreign('social_network_id')
+            .references('social_network_id')
+            .inTable('social_network')
+    })
+}
+
+const add_foreign_key_notes = () => {
+    return knex.schema.table('notes', table => {
+        table.integer('source_id').unsigned()
+        table.foreign('source_id').references('source_id').inTable('source')
+    })
+}
+
+const create_tables = async () => {
+    await create_social_network()
+    await create_source()
+    await create_notes()
+    await add_foreign_key_source()
+    await add_foreign_key_notes()
+    await knex.destroy()
+}
+
+create_tables().then(() => console.log('Created tables'))
+
+// const createTables = async () => {
+//     knex.schema
+//         .withSchema('public')
+//         .createTable('social_network', table => {
+//             table.increments('social_network_id')
+//             table.string('name')
+//         })
+//         .then(
+//             knex.schema
+//                 .withSchema('public')
+//                 .createTable('source', table => {
+//                     table.increments('source_id')
+//                     table
+//                         .foreign('social_network_id')
+//                         .references('social_network.social_network_id')
+//                     table.string('name')
+//                     table.string('link', 512)
+//                     table.string('rubric')
+//                 })
+//                 .then(
+//                     knex.schema
+//                         .withSchema('public')
+//                         .createTable('notes', table => {
+//                             table.increments('note_id')
+//                             table
+//                                 .foreign('source_id')
+//                                 .references('source.source_id')
+//                             table.string('link', 512)
+//                             table.string('headline')
+//                             table.string('content', 2048)
+//                             table.timestamp('created_at')
+//                         })
+//                         .then(() => console.log('created notes table'))
+//                 )
+//         )
+// }
