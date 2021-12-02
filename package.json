@@ -17,6 +17,7 @@
     "*.js": "eslint --cache"
   },
   "scripts": {
+    "start": "node ./src/api",
     "prepare": "husky install",
     "lint": "eslint src/",
     "lint:fix": "eslint --fix src/",
