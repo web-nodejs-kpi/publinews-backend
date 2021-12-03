@@ -26,8 +26,18 @@ const get_note_by_id = async note_id => {
     return note[0]
 }
 
-// TODO: implement insertion
-const insert_note = async (link, headline, content, source_id) => {}
+const insert_note = async (link, headline, content, source_id) => {
+    const note_id = await knex(TABLE_NAME)
+        .insert({
+            link: link,
+            headline: headline,
+            content: content,
+            created_at: new Date().toISOString(),
+            source_id: source_id,
+        })
+        .returning('note_id')
+    return note_id[0]
+}
 
 const delete_note = async note_id => {
     const deleted = await knex(TABLE_NAME).where('note_id', note_id).del()
@@ -48,7 +58,12 @@ const delete_note = async note_id => {
 //     })
 //     .then(() => knex.destroy())
 
-// Test zone
 // delete_note(1)
 //     .then(res => console.log(res))
 //     .then(() => knex.destroy())
+
+// insert_note('wijviw', 'wioevmo', 'wvmoim', 2)
+//     .then(res => console.log(res))
+//     .then(() => knex.destroy())
+
+// Test zone
