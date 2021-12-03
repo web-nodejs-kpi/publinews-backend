@@ -4,8 +4,8 @@ Fill .env file with data and
 Execute setup script:
 
 ```
-chmod +x setup.sh
-./setup.sh
+chmod +x make.sh
+./make.sh
 ```
 
 Backend for PubliNews project will have to assure:
