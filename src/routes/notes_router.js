@@ -24,12 +24,20 @@ router.get('/:note_id', async (req, res) => {
 })
 
 router.post('/', (req, res) => {
+    // const { link, headline, content, source_id } = req.body
+
     console.log(req.body)
     res.status(201).send(req.body)
 })
 
-router.delete('/:note_id', (req, res) => {
-    res.status(204).send(`deleted note with id ${req.params.note_id}`)
+router.delete('/:note_id', async (req, res) => {
+    const note_id = req.params.note_id
+    const deleted = await delete_note(note_id)
+    if (deleted instanceof Error) {
+        res.status(400).send({ details: deleted.message })
+    } else {
+        res.status(204).send({ details: `deleted note with id ${note_id}` })
+    }
 })
 
 module.exports = router
