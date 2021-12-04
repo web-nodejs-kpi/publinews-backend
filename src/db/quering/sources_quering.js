@@ -32,18 +32,8 @@ const delete_source = async source_id => {
     return deleted
 }
 
-// checked
-
-// get_all_sources()
-//     .then(res => res.forEach(el => console.log(el)))
-//     .then(() => knex.destroy())
-
-// delete_source(1)
-//     .then(res => console.log(res))
-//     .then(() => knex.destroy())
-
-// insert_source('lol', '2ji3f9j2f', 'sports', 2)
-//     .then(res => console.log(res))
-//     .then(() => knex.destroy())
-
-// test zone
+module.exports = {
+    get_all_sources,
+    insert_source,
+    delete_source,
+}
