@@ -15,7 +15,7 @@
     "prettier": "^2.4.1"
   },
   "lint-staged": {
-    "*.js": "eslint --cache"
+    "*.js": "eslint"
   },
   "scripts": {
     "start": "node ./src/",
