@@ -23,11 +23,22 @@ router.get('/:note_id', async (req, res) => {
     }
 })
 
-router.post('/', (req, res) => {
-    // const { link, headline, content, source_id } = req.body
+router.post('/', async (req, res) => {
+    const { link, headline, content, source_id } = req.body
 
-    console.log(req.body)
-    res.status(201).send(req.body)
+    if (!link || !headline || !content || !source_id) {
+        res.status(400).send({
+            details:
+                'not enough info provided, need: link, headline, content, source_id',
+        })
+    } else {
+        const insert = await insert_note(link, headline, content, source_id)
+        if (insert instanceof Error) {
+            res.status(400).send({ details: insert.message })
+        } else {
+            res.status(201).send({ success: `inserted with id ${insert}` })
+        }
+    }
 })
 
 router.delete('/:note_id', async (req, res) => {
