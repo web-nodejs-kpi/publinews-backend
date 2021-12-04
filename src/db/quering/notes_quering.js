@@ -44,26 +44,9 @@ const delete_note = async note_id => {
     return deleted
 }
 
-// Checked
-
-// get_all_notes()
-//     .then(content => {
-//         content.forEach(el => console.log(el))
-//     })
-//     .then(() => knex.destroy())
-
-// get_note_by_id(1)
-//     .then(content => {
-//         console.log(content)
-//     })
-//     .then(() => knex.destroy())
-
-// delete_note(1)
-//     .then(res => console.log(res))
-//     .then(() => knex.destroy())
-
-// insert_note('wijviw', 'wioevmo', 'wvmoim', 2)
-//     .then(res => console.log(res))
-//     .then(() => knex.destroy())
-
-// Test zone
+module.exports = {
+    get_all_notes,
+    get_note_by_id,
+    insert_note,
+    delete_note,
+}
