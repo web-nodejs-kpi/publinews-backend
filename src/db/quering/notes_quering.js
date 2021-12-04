@@ -27,21 +27,29 @@ const get_note_by_id = async note_id => {
 }
 
 const insert_note = async (link, headline, content, source_id) => {
-    const note_id = await knex(TABLE_NAME)
-        .insert({
-            link: link,
-            headline: headline,
-            content: content,
-            created_at: new Date().toISOString(),
-            source_id: source_id,
-        })
-        .returning('note_id')
-    return note_id[0]
+    try {
+        const note_id = await knex(TABLE_NAME)
+            .insert({
+                link: link,
+                headline: headline,
+                content: content,
+                created_at: new Date().toISOString(),
+                source_id: source_id,
+            })
+            .returning('note_id')
+        return note_id[0]
+    } catch {
+        return new Error('cannot insert such info')
+    }
 }
 
 const delete_note = async note_id => {
-    const deleted = await knex(TABLE_NAME).where('note_id', note_id).del()
-    return deleted
+    try {
+        const deleted = await knex(TABLE_NAME).where('note_id', note_id).del()
+        return deleted
+    } catch {
+        return new Error(`cannot delete with id ${note_id}`)
+    }
 }
 
 module.exports = {
@@ -50,3 +58,7 @@ module.exports = {
     insert_note,
     delete_note,
 }
+
+// insert_note('2jfijwfi', 'iewjfiojwefj', 'wiodjiowme', '129ud89ji9wjf')
+//     .then(res => console.log(res))
+//     .then(() => knex.destroy())
