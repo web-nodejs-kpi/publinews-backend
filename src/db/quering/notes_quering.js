@@ -58,7 +58,3 @@ module.exports = {
     insert_note,
     delete_note,
 }
-
-// insert_note('2jfijwfi', 'iewjfiojwefj', 'wiodjiowme', '129ud89ji9wjf')
-//     .then(res => console.log(res))
-//     .then(() => knex.destroy())
