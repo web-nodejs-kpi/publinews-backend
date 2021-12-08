@@ -4,11 +4,18 @@
 require('dotenv').config()
 const { TwitterApi } = require('twitter-api-v2')
 
-const twitterClient = new TwitterApi(process.env.TWITTER_BEARER_TOKEN)
+const twitter_client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN)
+const ro_client = twitter_client.readOnly
 
-const roClient = twitterClient.readOnly
-const userId = '152987149'
-roClient.v2.userTimeline(userId).then(res => {
-    const all_tweets = res.data.data
-    all_tweets.forEach(el => console.log(el.text + '\n\n'))
-})
+const get_twitter_posts = async (handle, posts_count = 3) => {
+    const user = await ro_client.v2.userByUsername(handle)
+    const res = await ro_client.v2.userTimeline(user.data.id, {
+        max_results: Math.max(posts_count, 5),
+        'tweet.fields': 'created_at',
+    })
+    return res.data.data.slice(0, posts_count).map(el => {
+        return { content: el.text, date: el.created_at }
+    })
+}
+
+module.exports = get_twitter_posts()
