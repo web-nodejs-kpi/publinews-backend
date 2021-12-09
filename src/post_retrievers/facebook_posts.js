@@ -1,34 +1,30 @@
 const rp = require('request-promise-native')
 const cheerio = require('cheerio')
 
-function GetFbPosts(pageUrl) {
-    const requestOptions = {
-        url: pageUrl,
+const get_facebook_posts = async (username, posts_count = 3) => {
+    const request_options = {
+        url: 'https://www.facebook.com/' + username + '/posts',
         headers: {
             'User-Agent':
                 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0',
         },
     }
-    return rp.get(requestOptions).then(postsHtml => {
-        const $ = cheerio.load(postsHtml)
-        const timeLinePostEls = $('.userContent')
-            .map((i, el) => $(el))
-            .get()
-        const posts = timeLinePostEls.map(post => {
+    const data = await rp.get(request_options)
+    const $ = cheerio.load(data)
+    const timeline = $('.userContent')
+        .map((i, el) => $(el))
+        .get()
+    return timeline
+        .map(post => {
             return {
-                message: post.html(),
-                createdAt: post
+                text: post.text(),
+                created_at: post
                     .parents('.userContentWrapper')
-                    .find('.timestampContent')
-                    .html(),
+                    .find('abbr')
+                    .attr('data-tooltip-content'),
             }
         })
-        return posts
-    })
+        .slice(Math.min(posts_count, 19))
 }
 
-GetFbPosts('https://www.facebook.com/tsn.ua/posts').then(posts => {
-    for (const post of posts) {
-        console.log(post.createdAt, post.message)
-    }
-})
+module.exports = get_facebook_posts()
