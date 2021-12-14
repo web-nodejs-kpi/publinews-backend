@@ -1,9 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    res.send(`request news with params ${req.params}`)
-    res.sendStatus(200)
+const get_recent_news = require('../post_retrievers')
+
+router.get('/', async (req, res) => {
+    const news = await get_recent_news()
+
+    res.status(200).send(news)
 })
 
 module.exports = router
