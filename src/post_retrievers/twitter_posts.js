@@ -7,15 +7,26 @@ const { TwitterApi } = require('twitter-api-v2')
 const twitter_client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN)
 const ro_client = twitter_client.readOnly
 
-const get_twitter_posts = async (handle, posts_count = 3) => {
-    const user = await ro_client.v2.userByUsername(handle)
+const get_twitter_posts = async (username, posts_count = 5) => {
+    const user = await ro_client.v2.userByUsername(username)
     const res = await ro_client.v2.userTimeline(user.data.id, {
-        max_results: Math.max(posts_count, 5),
+        max_results: posts_count,
         'tweet.fields': 'created_at',
     })
-    return res.data.data.slice(0, posts_count).map(el => {
-        return { content: el.text, date: el.created_at }
+
+    const tweets = res.data.data
+
+    return tweets.map(tweet => {
+        return {
+            link: `https://twitter.com/${username}/status/${tweet.id}`,
+            headline: tweet.text.slice(0, 50) + '...',
+            content: tweet.text,
+            date: tweet.created_at,
+        }
     })
 }
 
-module.exports = get_twitter_posts()
+module.exports = get_twitter_posts
+
+// Example of usage:
+// get_twitter_posts('CNN').then(res => console.log(res))
