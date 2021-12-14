@@ -9,10 +9,32 @@ const knex = require('knex').knex({
 })
 
 const TABLE_NAME = 'source'
+const SN_TABLE_NAME = 'social_network'
 
 const get_all_sources = async () => {
     const sources = await knex.from(TABLE_NAME).select('*')
     return sources
+}
+
+const find_source_social_network = async source_id => {
+    try {
+        // select name from social_network where social_network_id in (select social_network_id from source where source_id=4);
+        const social_network_id = await knex
+            .from(TABLE_NAME)
+            .select('social_network_id')
+            .where({ source_id: source_id })
+
+        const social_network = await knex
+            .from(SN_TABLE_NAME)
+            .select('name')
+            .where({
+                social_network_id: social_network_id[0].social_network_id,
+            })
+
+        return social_network[0].name
+    } catch {
+        return new Error('Cannot find social network')
+    }
 }
 
 const insert_source = async (source_name, link, rubric, social_network_id) => {
@@ -44,6 +66,7 @@ const delete_source = async source_id => {
 
 module.exports = {
     get_all_sources,
+    find_source_social_network,
     insert_source,
     delete_source,
 }
