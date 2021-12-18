@@ -26,7 +26,7 @@ const get_note_by_id = async note_id => {
     return note[0]
 }
 
-const insert_note = async (link, headline, content, source_id) => {
+const insert_note = async (link, headline, content) => {
     try {
         const note_id = await knex(TABLE_NAME)
             .insert({
@@ -34,7 +34,6 @@ const insert_note = async (link, headline, content, source_id) => {
                 headline: headline,
                 content: content,
                 created_at: new Date().toISOString(),
-                source_id: source_id,
             })
             .returning('note_id')
         return note_id[0]

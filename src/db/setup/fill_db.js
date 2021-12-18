@@ -47,19 +47,11 @@ const add_foreign_key_source = () => {
     })
 }
 
-const add_foreign_key_notes = () => {
-    return knex.schema.table('note', table => {
-        table.integer('source_id').unsigned()
-        table.foreign('source_id').references('source_id').inTable('source')
-    })
-}
-
 const create_tables = async () => {
     await create_social_network()
     await create_source()
     await create_notes()
     await add_foreign_key_source()
-    await add_foreign_key_notes()
     await knex.destroy()
 }
 
