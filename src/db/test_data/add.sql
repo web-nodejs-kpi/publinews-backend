@@ -1,7 +1,7 @@
 insert into social_network (name) values 
-('fb'),
-('tu'),
-('tw');
+('facebook'),
+('tumblr'),
+('twitter');
 
 
 insert into source (name, link, rubric, social_network_id) values
