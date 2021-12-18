@@ -41,7 +41,7 @@ router.delete('/:source_id', async (req, res) => {
     if (deleted instanceof Error) {
         res.status(400).send({ details: deleted.message })
     } else {
-        res.status(204).send(`deleted note with id ${req.params.source_id}`)
+        res.status(204).send(`deleted source with id ${req.params.source_id}`)
     }
 })
 
