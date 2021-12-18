@@ -13,7 +13,7 @@ const get_tumblr_posts = async (blogName, postsCount = 5) => {
         return {
             link: el.post_url,
             headline: el.caption.slice(0, 50) + '...',
-            content: el.caption,
+            content: el.caption.replace(/<[^>]+>/g, ''),
             created_at: el.date,
         }
     })
