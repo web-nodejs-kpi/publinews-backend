@@ -21,7 +21,7 @@ const get_twitter_posts = async (username, posts_count = 5) => {
             link: `https://twitter.com/${username}/status/${tweet.id}`,
             headline: tweet.text.slice(0, 50) + '...',
             content: tweet.text,
-            date: tweet.created_at,
+            created_at: tweet.created_at,
         }
     })
 }
