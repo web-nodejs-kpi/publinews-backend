@@ -22,14 +22,20 @@ const get_posts_from_social_network = async source => {
         return []
     }
 
+    let retrieved_posts
     switch (social_network) {
         case FACEBOOK_SOURCE_NAME:
-            return await get_facebook_posts(link)
+            retrieved_posts = await get_facebook_posts(link)
+            break
         case TUMBLR_SOURCE_NAME:
-            return await get_tumblr_posts(link)
+            retrieved_posts = await get_tumblr_posts(link)
+            break
         case TWITTER_SOURCE_NAME:
-            return await get_twitter_posts(link)
+            retrieved_posts = await get_twitter_posts(link)
+            break
     }
+    retrieved_posts.forEach(post => (post['source_name'] = source.name))
+    return retrieved_posts
 }
 
 const get_recent_news = async () => {
