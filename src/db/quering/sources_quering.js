@@ -64,9 +64,26 @@ const delete_source = async source_id => {
     }
 }
 
+const get_sources_by_rubric = async rubric => {
+    try {
+        const sources = await knex(TABLE_NAME)
+            .select('*')
+            .where('rubric', rubric)
+        return sources
+    } catch {
+        return new Error(`cannot find with rubric ${rubric}`)
+    }
+}
+
 module.exports = {
     get_all_sources,
     find_source_social_network,
     insert_source,
     delete_source,
+    get_sources_by_rubric,
 }
+
+// get_sources_by_rubric('politics')
+//     .then(res => console.log(res))
+//     .then()
+//     .then(() => knex.destroy())
