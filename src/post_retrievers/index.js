@@ -5,11 +5,12 @@ const get_twitter_posts = require('./twitter_posts')
 const {
     get_all_sources,
     find_source_social_network,
+    get_sources_by_rubric,
 } = require('../db/quering/sources_quering')
 
-const FACEBOOK_SOURCE_NAME = 'fb'
-const TUMBLR_SOURCE_NAME = 'tu'
-const TWITTER_SOURCE_NAME = 'tw'
+const FACEBOOK_SOURCE_NAME = 'facebook'
+const TUMBLR_SOURCE_NAME = 'tumblr'
+const TWITTER_SOURCE_NAME = 'twitter'
 
 const get_posts_from_social_network = async source => {
     const link = source.link
@@ -50,7 +51,24 @@ const get_recent_news = async () => {
     return all_news.sort((a, b) => 0.5 - Math.random())
 }
 
-module.exports = get_recent_news
+const get_recent_news_by_rubric = async rubric => {
+    const sources = await get_sources_by_rubric(rubric)
+
+    const all_news = []
+    for (const source of sources) {
+        const posts = await get_posts_from_social_network(source)
+        all_news.push(...posts)
+    }
+    // return shuffled array
+    return all_news.sort((a, b) => 0.5 - Math.random())
+}
+
+module.exports = {
+    get_recent_news,
+    get_recent_news_by_rubric,
+}
 
 // Example of usage
 // get_recent_news().then(res => console.log(res))
+
+// get_recent_news_by_rubric('music').then(res => console.log(res))
