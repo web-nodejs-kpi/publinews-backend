@@ -11,8 +11,26 @@ const knex = require('knex').knex({
 const TABLE_NAME = 'source'
 const SN_TABLE_NAME = 'social_network'
 
+// const get_all_sources = async () => {
+//     const sources = await knex.from(TABLE_NAME).select('*')
+//     return sources
+// }
+
 const get_all_sources = async () => {
-    const sources = await knex.from(TABLE_NAME).select('*')
+    const sources = await knex
+        .from(TABLE_NAME)
+        .join(
+            SN_TABLE_NAME,
+            TABLE_NAME + '.social_network_id',
+            SN_TABLE_NAME + '.social_network_id'
+        )
+        .select(
+            TABLE_NAME + '.source_id',
+            TABLE_NAME + '.link',
+            TABLE_NAME + '.name',
+            TABLE_NAME + '.rubric',
+            `${SN_TABLE_NAME}.name as social_network_name`
+        )
     return sources
 }
 
