@@ -19,7 +19,6 @@ const get_facebook_posts = async (username, posts_count = 5) => {
     return timeline.slice(0, posts_count).map(post => {
         return {
             link: request_options.url,
-            headline: post.text().slice(0, 50) + '...',
             content: post.text(),
             created_at: post
                 .parents('.userContentWrapper')
